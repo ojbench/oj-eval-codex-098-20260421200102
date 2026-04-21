@@ -52,6 +52,13 @@ int main() {
         cur = cur->l;
     }
     if (ans != -1) cout << ans << "\n";
+    // free all allocated nodes to avoid memory leak reports
+    function<void(Node*)> destroy = [&](Node* node){
+        if (!node) return;
+        destroy(node->l);
+        destroy(node->r);
+        delete node;
+    };
+    destroy(root);
     return 0;
 }
-
